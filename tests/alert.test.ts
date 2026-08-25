@@ -22,6 +22,16 @@ describe('alert semantics', () => {
     expect(alert).toContain('ondismiss?.();');
     expect(alert).toContain('if (!visible) return;');
   });
+
+  test('hands keyboard focus to the next surviving control after dismissal', () => {
+    expect(alert).toContain('bind:this={dismissButton}');
+    expect(alert).toContain("dismissButton?.matches(':focus-visible')");
+    expect(alert).toContain("dismissButton.closest('.worn-alert')");
+    expect(alert).toContain('Node.DOCUMENT_POSITION_FOLLOWING');
+    expect(alert).toContain('Node.DOCUMENT_POSITION_PRECEDING');
+    expect(alert).toContain('recoveryTarget?.focus();');
+    expect(alert.indexOf('recoveryTarget?.focus();')).toBeLessThan(alert.indexOf('visible = false;'));
+  });
 });
 
 describe('standalone behavior', () => {
