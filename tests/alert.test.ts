@@ -35,6 +35,11 @@ describe('standalone behavior', () => {
     expect(alert).toContain('touch-action: manipulation;');
   });
 
+  test('gives dismiss focus a public token and a high-contrast shared fallback', () => {
+    expect(alert).toContain('outline: 2px dashed var(--worn-alert-focus, var(--cockpit-focus, var(--cockpit-accent, currentColor)));');
+    expect(alert).not.toContain('outline: 2px dashed var(--cockpit-accent);');
+  });
+
   test('uses theme-safe mask icons and reduced-motion entry', () => {
     for (const tone of ['info', 'success', 'warning', 'danger']) {
       expect(alert).toContain(`.worn-alert.is-${tone} {`);
